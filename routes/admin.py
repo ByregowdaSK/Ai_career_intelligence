@@ -12,11 +12,6 @@ from models.user_model import (
     delete_user_by_id
 
 )
-
-# =====================================================
-# BLUEPRINT
-# =====================================================
-
 admin = Blueprint(
 
     'admin',
@@ -27,16 +22,8 @@ admin = Blueprint(
 
 )
 
-# =====================================================
-# ADMIN DASHBOARD
-# =====================================================
-
 @admin.route('/')
 def admin_dashboard():
-
-    # =================================================
-    # LOGIN CHECK
-    # =================================================
 
     if 'user_id' not in session:
         return redirect('/login')
@@ -44,21 +31,9 @@ def admin_dashboard():
     if not session.get('is_admin'):
         return redirect('/dashboard')
 
-    # =================================================
-    # FETCH USERS FROM DATABASE
-    # =================================================
-
     users = get_all_users()
 
-    # =================================================
-    # TOTAL USERS
-    # =================================================
-
     total_users = len(users)
-
-    # =================================================
-    # TOTAL ADMINS
-    # =================================================
 
     admins = [
 
@@ -70,10 +45,6 @@ def admin_dashboard():
 
     ]
 
-    # =================================================
-    # TOTAL STUDENTS
-    # =================================================
-
     students = [
 
         u for u in users
@@ -84,10 +55,6 @@ def admin_dashboard():
 
     ]
 
-    # =================================================
-    # RESUME UPLOAD COUNT
-    # =================================================
-
     resume_uploaded = len([
 
         u for u in users
@@ -96,9 +63,6 @@ def admin_dashboard():
 
     ])
 
-    # =================================================
-    # TOTAL CHATBOT USAGE
-    # =================================================
 
     total_chatbot_usage = sum([
 
@@ -110,9 +74,6 @@ def admin_dashboard():
 
     ])
 
-    # =================================================
-    # TOTAL RECOMMENDATIONS
-    # =================================================
 
     total_recommendations = sum([
 
@@ -123,10 +84,6 @@ def admin_dashboard():
         for u in users
 
     ])
-
-    # =================================================
-    # AVERAGE RESUME SCORE
-    # =================================================
 
     scores = [
 
@@ -147,10 +104,6 @@ def admin_dashboard():
             sum(scores) / len(scores)
 
         )
-
-    # =================================================
-    # RENDER TEMPLATE
-    # =================================================
 
     return render_template(
 
@@ -174,26 +127,15 @@ def admin_dashboard():
 
     )
 
-# =====================================================
-# MANAGE USERS
-# =====================================================
 
 @admin.route('/users')
 def manage_users():
-
-    # =================================================
-    # LOGIN CHECK
-    # =================================================
 
     if 'user_id' not in session:
         return redirect('/login')
 
     if not session.get('is_admin'):
         return redirect('/dashboard')
-
-    # =================================================
-    # PAGINATION
-    # =================================================
 
     page = int(
 
@@ -219,10 +161,6 @@ def manage_users():
 
     paginated_users = users[start:end]
 
-    # =================================================
-    # RENDER TEMPLATE
-    # =================================================
-
     return render_template(
 
         'admin_users.html',
@@ -235,51 +173,29 @@ def manage_users():
 
     )
 
-# =====================================================
-# DELETE USER
-# =====================================================
 
 @admin.route('/delete_user/<int:user_id>')
 def delete_user(user_id):
 
-    # =================================================
-    # LOGIN CHECK
-    # =================================================
 
     if 'user_id' not in session:
         return redirect('/login')
 
     if not session.get('is_admin'):
         return redirect('/dashboard')
-
-    # =================================================
-    # DELETE USER
-    # =================================================
 
     delete_user_by_id(user_id)
 
     return redirect('/admin/users')
 
-# =====================================================
-# EXPORT USERS PDF REPORT
-# =====================================================
-
 @admin.route('/export_users')
 def export_users():
-
-    # =================================================
-    # LOGIN CHECK
-    # =================================================
 
     if 'user_id' not in session:
         return redirect('/login')
 
     if not session.get('is_admin'):
         return redirect('/dashboard')
-
-    # =================================================
-    # REPORTLAB IMPORTS
-    # =================================================
 
     from reportlab.platypus import (
 
@@ -309,15 +225,7 @@ def export_users():
 
     from reportlab.lib.enums import TA_CENTER
 
-    # =================================================
-    # FETCH USERS
-    # =================================================
-
     users = get_all_users()
-
-    # =================================================
-    # TEMP FILE PATH
-    # =================================================
 
     filepath = os.path.join(
 
@@ -326,10 +234,6 @@ def export_users():
         'users_report.pdf'
 
     )
-
-    # =================================================
-    # PDF DOCUMENT
-    # =================================================
 
     doc = SimpleDocTemplate(
 
@@ -347,11 +251,6 @@ def export_users():
     styles = getSampleStyleSheet()
 
     elements = []
-
-    # =================================================
-    # TITLE STYLE
-    # =================================================
-
     title_style = ParagraphStyle(
 
         'TitleStyle',
@@ -368,10 +267,6 @@ def export_users():
 
     )
 
-    # =================================================
-    # TITLE
-    # =================================================
-
     title = Paragraph(
 
         "Career AI - Complete Users Report",
@@ -381,10 +276,6 @@ def export_users():
     )
 
     elements.append(title)
-
-    # =================================================
-    # SUMMARY
-    # =================================================
 
     total_users = len(users)
 
@@ -433,11 +324,6 @@ def export_users():
         Spacer(1,20)
 
     )
-
-    # =================================================
-    # TABLE HEADERS
-    # =================================================
-
     data = [[
 
         'ID',
@@ -452,11 +338,6 @@ def export_users():
         'Last Login'
 
     ]]
-
-    # =================================================
-    # TABLE ROWS
-    # =================================================
-
     for user in users:
 
         skills = str(
@@ -541,10 +422,6 @@ def export_users():
 
         ])
 
-    # =================================================
-    # TABLE
-    # =================================================
-
     table = Table(
 
         data,
@@ -567,10 +444,6 @@ def export_users():
         ]
 
     )
-
-    # =================================================
-    # TABLE STYLE
-    # =================================================
 
     table.setStyle(
 
@@ -650,15 +523,7 @@ def export_users():
 
     elements.append(table)
 
-    # =================================================
-    # BUILD PDF
-    # =================================================
-
     doc.build(elements)
-
-    # =================================================
-    # DOWNLOAD PDF
-    # =================================================
 
     return send_file(
 
