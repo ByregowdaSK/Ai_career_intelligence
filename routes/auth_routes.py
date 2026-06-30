@@ -15,11 +15,6 @@ from extensions import mail
 
 auth = Blueprint('auth', __name__)
 
-
-# =========================
-# LOGIN
-# =========================
-
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
 
@@ -33,10 +28,6 @@ def login():
         user = get_user_by_email(email)
 
         if user:
-
-            # =========================
-            # ADMIN & TEST USER
-            # =========================
 
             if (
                 user['email'] in ['admin@gmail.com', 'test@gmail.com']
@@ -74,11 +65,6 @@ def login():
                     return redirect('/admin')
 
                 return redirect('/dashboard')
-
-            # =========================
-            # REGISTERED USERS
-            # =========================
-
             elif check_password_hash(
                 user['password'],
                 password
@@ -109,8 +95,6 @@ def login():
                 cursor.close()
                 conn.close()
 
-                # ADMIN REDIRECT
-
                 if user['role'] == 'admin':
                     return redirect('/admin')
 
@@ -128,10 +112,6 @@ def login():
     )
 
 
-# =========================
-# REGISTER
-# =========================
-
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
 
@@ -146,7 +126,6 @@ def register():
 
     confirm = request.form.get('confirm_password')
 
-    # EMPTY VALIDATION
 
     if not name or not email or not password or not confirm:
 
@@ -155,16 +134,12 @@ def register():
             error="All fields are required"
         )
 
-    # PASSWORD MATCH
-
     if password != confirm:
 
         return render_template(
             'register.html',
             error="Passwords do not match"
         )
-
-    # EMAIL FORMAT
 
     if not re.match(
         r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
@@ -176,16 +151,12 @@ def register():
             error="Invalid email format"
         )
 
-    # PASSWORD LENGTH
-
     if len(password) < 6:
 
         return render_template(
             'register.html',
             error="Password must be at least 6 characters"
         )
-
-    # DUPLICATE CHECK
 
     existing_user = get_user_by_email(email)
 
@@ -196,11 +167,9 @@ def register():
             error="Email already exists"
         )
 
-    # HASH PASSWORD
 
     hashed_password = generate_password_hash(password)
 
-    # INSERT USER
 
     conn = get_db_connection()
 
@@ -241,11 +210,6 @@ def register():
 
     return redirect('/login')
 
-
-# =========================
-# FORGOT PASSWORD
-# =========================
-
 @auth.route('/forgot_password', methods=['GET', 'POST'])
 def forgot_password():
 
@@ -282,10 +246,6 @@ def forgot_password():
     )
 
 
-# =========================
-# VERIFY OTP
-# =========================
-
 @auth.route('/verify_otp', methods=['GET', 'POST'])
 def verify_otp():
 
@@ -307,11 +267,6 @@ def verify_otp():
         'verify_otp.html',
         error=error
     )
-
-
-# =========================
-# RESET PASSWORD
-# =========================
 
 @auth.route('/reset_password', methods=['GET', 'POST'])
 def reset_password():
@@ -353,11 +308,6 @@ def reset_password():
     return render_template(
         'reset_password.html'
     )
-
-
-# =========================
-# LOGOUT
-# =========================
 
 @auth.route('/logout')
 def logout():
