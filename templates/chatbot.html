@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Chatbot | Career AI</title>
+
+    <!-- GOOGLE FONT -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FONT AWESOME -->
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+            background:#071129;
+            display:flex;
+            min-height:100vh;
+            overflow-x:hidden;
+            color:white;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar{
+            width:260px;
+            background:linear-gradient(180deg,#020617,#0f172a,#111827);
+            padding:30px 18px;
+            position:fixed;
+            height:100%;
+            left:0;
+            top:0;
+            box-shadow:8px 0 25px rgba(0,0,0,0.2);
+        }
+
+        .logo{
+            color:white;
+            font-size:28px;
+            font-weight:700;
+            margin-bottom:50px;
+            display:flex;
+            align-items:center;
+            gap:12px;
+        }
+
+        .logo span{
+            color:#38bdf8;
+        }
+
+        .nav-links{
+            display:flex;
+            flex-direction:column;
+            gap:14px;
+        }
+
+        .nav-links a{
+            text-decoration:none;
+            color:#cbd5e1;
+            padding:16px 18px;
+            border-radius:16px;
+            display:flex;
+            align-items:center;
+            gap:14px;
+            transition:0.3s;
+            font-size:16px;
+            font-weight:500;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active{
+            background:linear-gradient(135deg,#2563eb,#06b6d4);
+            color:white;
+            transform:translateX(5px);
+        }
+
+        /* MAIN CONTENT */
+
+        .main-content{
+            margin-left:260px;
+            width:calc(100% - 260px);
+            padding:40px;
+        }
+
+        /* CHAT CARD */
+
+        .chat-card{
+            background:#1e2329;
+            border-radius:30px;
+            padding:40px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .chat-title{
+            font-size:58px;
+            font-weight:700;
+            margin-bottom:12px;
+        }
+
+        .chat-subtitle{
+            font-size:20px;
+            color:#cbd5e1;
+            margin-bottom:35px;
+        }
+
+        /* TEXTAREA */
+
+        .question-box{
+            width:100%;
+            background:#020b52;
+            border:none;
+            border-radius:25px;
+            padding:25px;
+            color:white;
+            font-size:20px;
+            resize:none;
+            outline:none;
+        }
+
+        .question-box::placeholder{
+            color:#94a3b8;
+        }
+
+        /* TAGS */
+
+        .tags{
+            margin-top:20px;
+            margin-bottom:25px;
+        }
+
+        .tag{
+            display:inline-block;
+            background:#374151;
+            color:white;
+            padding:10px 18px;
+            border-radius:12px;
+            margin-right:10px;
+            margin-bottom:10px;
+            font-size:15px;
+        }
+
+        /* BUTTON */
+
+        .ask-btn{
+            background:linear-gradient(135deg,#2563eb,#3b82f6);
+            border:none;
+            color:white;
+            padding:16px 35px;
+            border-radius:16px;
+            font-size:22px;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .ask-btn:hover{
+            transform:translateY(-3px);
+        }
+
+        /* RESPONSE */
+
+        .response-box{
+            margin-top:35px;
+            background:#374151;
+            border-radius:22px;
+            padding:30px;
+            border-left:5px solid #3b82f6;
+        }
+
+        .response-title{
+            font-size:30px;
+            font-weight:600;
+            margin-bottom:20px;
+        }
+
+        .response-text{
+            font-size:19px;
+            line-height:1.9;
+            color:#f1f5f9;
+            white-space:pre-wrap;
+        }
+
+        /* FEATURE CARDS */
+
+        .feature-grid{
+            margin-top:40px;
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+            gap:25px;
+        }
+
+        .feature-card{
+            background:#111827;
+            border-radius:24px;
+            padding:30px;
+            transition:0.3s;
+            border:1px solid #1f2937;
+        }
+
+        .feature-card:hover{
+            transform:translateY(-5px);
+            border-color:#2563eb;
+        }
+
+        .feature-card i{
+            font-size:42px;
+            color:#3b82f6;
+            margin-bottom:20px;
+        }
+
+        .feature-card h3{
+            font-size:30px;
+            margin-bottom:15px;
+        }
+
+        .feature-card p{
+            color:#cbd5e1;
+            line-height:1.8;
+            font-size:17px;
+        }
+
+        /* MOBILE */
+
+        @media(max-width:900px){
+
+            .sidebar{
+                width:85px;
+            }
+
+            .logo span,
+            .nav-links a span{
+                display:none;
+            }
+
+            .main-content{
+                margin-left:85px;
+                width:calc(100% - 85px);
+            }
+
+            .chat-title{
+                font-size:42px;
+            }
+
+        }
+
+        @media(max-width:600px){
+
+            .main-content{
+                padding:20px;
+            }
+
+            .chat-title{
+                font-size:34px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            <span>Career AI</span>
+
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/dashboard">
+
+                <i class="fa-solid fa-house"></i>
+
+                <span>Dashboard</span>
+
+            </a>
+
+            <a href="/profile">
+
+                <i class="fa-solid fa-user"></i>
+
+                <span>Profile</span>
+
+            </a>
+
+            <a href="/recommend">
+
+                <i class="fa-solid fa-lightbulb"></i>
+
+                <span>Recommendations</span>
+
+            </a>
+
+            <a href="/results">
+
+                <i class="fa-solid fa-chart-column"></i>
+
+                <span>Results</span>
+
+            </a>
+
+            <a href="/resume">
+
+                <i class="fa-solid fa-file"></i>
+
+                <span>Resume</span>
+
+            </a>
+
+            <a href="/chatbot" class="active">
+
+                <i class="fa-solid fa-robot"></i>
+
+                <span>AI Chatbot</span>
+
+            </a>
+
+            <a href="/logout">
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                <span>Logout</span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- MAIN CONTENT -->
+
+    <div class="main-content">
+
+        <div class="chat-card">
+
+            <h1 class="chat-title">
+
+                AI Career Assistant
+
+            </h1>
+
+            <p class="chat-subtitle">
+
+                Ask career questions, get resume tips,
+                interview guidance, and skill recommendations instantly.
+
+            </p>
+
+            <!-- FORM -->
+
+            <form method="POST">
+
+                <textarea
+                    name="question"
+                    rows="6"
+                    class="question-box"
+                    placeholder="Ask career questions..."
+                    required>{{ question }}</textarea>
+
+                <!-- TAGS -->
+
+                <div class="tags">
+
+                    <span class="tag">Resume Tips</span>
+
+                    <span class="tag">Interview Questions</span>
+
+                    <span class="tag">Career Guidance</span>
+
+                    <span class="tag">Skill Improvement</span>
+
+                    <span class="tag">Full Stack</span>
+
+                </div>
+
+                <!-- BUTTON -->
+
+                <button type="submit" class="ask-btn">
+
+                    <i class="fa-solid fa-paper-plane"></i>
+
+                    Ask AI
+
+                </button>
+
+            </form>
+
+            <!-- AI RESPONSE -->
+
+            {% if answer %}
+
+            <div class="response-box">
+
+                <div class="response-title">
+
+                    <i class="fa-solid fa-comments"></i>
+
+                    AI Response
+
+                </div>
+
+                <div class="response-text">
+
+                    {{ answer }}
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+        <!-- FEATURE CARDS -->
+
+        <div class="feature-grid">
+
+            <div class="feature-card">
+
+                <i class="fa-solid fa-laptop-code"></i>
+
+                <h3>Career Paths</h3>
+
+                <p>
+
+                    Explore career opportunities based on your technical skills and interests.
+
+                </p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <i class="fa-solid fa-file-lines"></i>
+
+                <h3>Resume Guidance</h3>
+
+                <p>
+
+                    Get resume writing tips, formatting ideas, and profile improvement suggestions.
+
+                </p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <i class="fa-solid fa-user-graduate"></i>
+
+                <h3>Interview Practice</h3>
+
+                <p>
+
+                    Prepare for technical interviews with AI-powered interview questions and answers.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

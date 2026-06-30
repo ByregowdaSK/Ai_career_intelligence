@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Profile | Career AI</title>
+
+    <!-- GOOGLE FONT -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- FONT AWESOME -->
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+            background:linear-gradient(
+                135deg,
+                #020617,
+                #071129,
+                #0f172a
+            );
+            display:flex;
+            min-height:100vh;
+            color:white;
+        }
+
+        /* ========================= */
+        /* SIDEBAR */
+        /* ========================= */
+
+        .sidebar{
+            width:260px;
+            background:linear-gradient(
+                180deg,
+                #020617,
+                #0f172a,
+                #111827
+            );
+            padding:30px 18px;
+            position:fixed;
+            height:100%;
+            left:0;
+            top:0;
+            border-right:1px solid #1e293b;
+            box-shadow:8px 0 25px rgba(0,0,0,0.35);
+        }
+
+        .logo{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            font-size:30px;
+            font-weight:700;
+            margin-bottom:50px;
+        }
+
+        .logo span{
+            color:#38bdf8;
+        }
+
+        .nav-links{
+            display:flex;
+            flex-direction:column;
+            gap:14px;
+        }
+
+        .nav-links a{
+            text-decoration:none;
+            color:#cbd5e1;
+            padding:16px 18px;
+            border-radius:16px;
+            display:flex;
+            align-items:center;
+            gap:14px;
+            transition:0.3s;
+            font-weight:500;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active{
+            background:linear-gradient(
+                135deg,
+                #2563eb,
+                #06b6d4
+            );
+            color:white;
+            transform:translateX(5px);
+            box-shadow:0 10px 25px rgba(
+                37,
+                99,
+                235,
+                0.3
+            );
+        }
+
+        /* ========================= */
+        /* MAIN */
+        /* ========================= */
+
+        .main-content{
+            margin-left:260px;
+            width:calc(100% - 260px);
+            padding:40px;
+        }
+
+        .top-section h1{
+            font-size:48px;
+            margin-bottom:10px;
+        }
+
+        .top-section p{
+            color:#cbd5e1;
+            margin-bottom:30px;
+        }
+
+        /* ========================= */
+        /* ALERT */
+        /* ========================= */
+
+        .alert-box{
+            background:rgba(37,99,235,0.15);
+            border:1px solid rgba(
+                59,
+                130,
+                246,
+                0.25
+            );
+            color:#93c5fd;
+            padding:18px 22px;
+            border-radius:16px;
+            margin-bottom:30px;
+            font-weight:600;
+        }
+
+        /* ========================= */
+        /* MESSAGE */
+        /* ========================= */
+
+        .message{
+            background:rgba(16,185,129,0.15);
+            color:#6ee7b7;
+            border:1px solid rgba(
+                16,
+                185,
+                129,
+                0.25
+            );
+            padding:14px 18px;
+            border-radius:14px;
+            margin-bottom:20px;
+        }
+
+        .error{
+            background:rgba(239,68,68,0.15);
+            color:#fca5a5;
+            border:1px solid rgba(
+                239,
+                68,
+                68,
+                0.25
+            );
+            padding:14px 18px;
+            border-radius:14px;
+            margin-bottom:20px;
+        }
+
+        /* ========================= */
+        /* CARD */
+        /* ========================= */
+
+        .card{
+            background:rgba(15,23,42,0.88);
+            border:1px solid #1e293b;
+            border-radius:28px;
+            padding:35px;
+            margin-bottom:30px;
+            backdrop-filter:blur(12px);
+            box-shadow:0 12px 30px rgba(
+                0,
+                0,
+                0,
+                0.35
+            );
+        }
+
+        .card h2{
+            font-size:38px;
+            margin-bottom:30px;
+        }
+
+        /* ========================= */
+        /* CATEGORY */
+        /* ========================= */
+
+        .skill-category{
+            margin-bottom:40px;
+        }
+
+        .skill-category h3{
+            margin-bottom:20px;
+            font-size:28px;
+            color:#e2e8f0;
+        }
+
+        /* ========================= */
+        /* GRID */
+        /* ========================= */
+
+        .skills-grid{
+            display:flex;
+            flex-wrap:wrap;
+            gap:16px;
+        }
+
+        /* ========================= */
+        /* SKILL CARD */
+        /* ========================= */
+
+        .skill-card input{
+            display:none;
+        }
+
+        .skill-card span{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-width:140px;
+            padding:16px 24px;
+            border-radius:16px;
+            background:#0f172a;
+            border:1px solid #1e293b;
+            color:#e2e8f0;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .skill-card span:hover{
+            transform:translateY(-3px);
+            background:#1e293b;
+        }
+
+        .skill-card input:checked + span{
+            background:linear-gradient(
+                135deg,
+                #2563eb,
+                #06b6d4
+            );
+            border:none;
+            color:white;
+            transform:scale(1.05);
+            box-shadow:0 10px 20px rgba(
+                37,
+                99,
+                235,
+                0.25
+            );
+        }
+
+        /* ========================= */
+        /* BUTTON */
+        /* ========================= */
+
+        .save-btn{
+            border:none;
+            padding:16px 34px;
+            border-radius:16px;
+            background:linear-gradient(
+                135deg,
+                #2563eb,
+                #06b6d4
+            );
+            color:white;
+            font-size:16px;
+            font-weight:700;
+            cursor:pointer;
+            transition:0.3s;
+            margin-top:10px;
+        }
+
+        .save-btn:hover{
+            transform:translateY(-3px);
+            box-shadow:0 10px 20px rgba(
+                37,
+                99,
+                235,
+                0.25
+            );
+        }
+
+        /* ========================= */
+        /* SELECTED SKILLS */
+        /* ========================= */
+
+        .selected-skills{
+            display:flex;
+            flex-wrap:wrap;
+            gap:14px;
+        }
+
+        .selected-badge{
+            padding:12px 20px;
+            border-radius:30px;
+            background:linear-gradient(
+                135deg,
+                #2563eb,
+                #06b6d4
+            );
+            color:white;
+            font-weight:600;
+            box-shadow:0 6px 18px rgba(
+                37,
+                99,
+                235,
+                0.25
+            );
+        }
+
+        .empty-text{
+            color:#94a3b8;
+        }
+
+        /* ========================= */
+        /* RESPONSIVE */
+        /* ========================= */
+
+        @media(max-width:900px){
+
+            .sidebar{
+                width:85px;
+            }
+
+            .logo span,
+            .nav-links a span{
+                display:none;
+            }
+
+            .main-content{
+                margin-left:85px;
+                width:calc(100% - 85px);
+            }
+
+        }
+
+        @media(max-width:600px){
+
+            .skills-grid{
+                flex-direction:column;
+            }
+
+            .skill-card span{
+                width:100%;
+            }
+
+            .top-section h1{
+                font-size:34px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Career AI</span>
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/dashboard">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="/profile" class="active">
+                <i class="fa-solid fa-user"></i>
+                <span>Profile</span>
+            </a>
+
+            <a href="/recommend">
+                <i class="fa-solid fa-lightbulb"></i>
+                <span>Recommendations</span>
+            </a>
+
+            <a href="/results">
+                <i class="fa-solid fa-chart-column"></i>
+                <span>Results</span>
+            </a>
+
+            <a href="/resume">
+                <i class="fa-solid fa-file"></i>
+                <span>Resume</span>
+            </a>
+
+            <a href="/chatbot">
+                <i class="fa-solid fa-robot"></i>
+                <span>AI Chatbot</span>
+            </a>
+
+            <a href="/logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- MAIN -->
+
+    <div class="main-content">
+
+        <div class="top-section">
+
+            <h1>Profile & Skills</h1>
+
+            <p>
+                Select your technical skills
+                for AI career analysis
+            </p>
+
+        </div>
+
+        <div class="alert-box">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            Select only IT-related skills.
+            These skills are used for
+            recommendations and
+            skill-gap analysis.
+
+        </div>
+
+        {% if message %}
+            <div class="message">
+                {{ message }}
+            </div>
+        {% endif %}
+
+        {% if error %}
+            <div class="error">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <!-- SKILLS CARD -->
+
+        <div class="card">
+
+            <h2>Select Skills</h2>
+
+            <form method="POST">
+
+                <!-- PROGRAMMING -->
+
+                <div class="skill-category">
+
+                    <h3>Programming Languages</h3>
+
+                    {% set programming = [
+                        'Python','Java','C','C++','C#',
+                        'JavaScript','TypeScript','PHP',
+                        'Go','Rust','Swift','Kotlin','R'
+                    ] %}
+
+                    <div class="skills-grid">
+
+                        {% for skill in programming %}
+
+                        <label class="skill-card">
+
+                            <input
+                                type="checkbox"
+                                name="skills"
+                                value="{{ skill }}"
+                                {% if skill in selected_skills %}
+                                checked
+                                {% endif %}
+                            >
+
+                            <span>{{ skill }}</span>
+
+                        </label>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+                <!-- WEB -->
+
+                <div class="skill-category">
+
+                    <h3>Web Development</h3>
+
+                    {% set web = [
+                        'HTML','CSS','Bootstrap',
+                        'React','Angular','Vue.js',
+                        'Node.js','Flask','Django',
+                        'Express.js','Spring','SQL'
+                    ] %}
+
+                    <div class="skills-grid">
+
+                        {% for skill in web %}
+
+                        <label class="skill-card">
+
+                            <input
+                                type="checkbox"
+                                name="skills"
+                                value="{{ skill }}"
+                                {% if skill in selected_skills %}
+                                checked
+                                {% endif %}
+                            >
+
+                            <span>{{ skill }}</span>
+
+                        </label>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+                <!-- DATABASE -->
+
+                <div class="skill-category">
+
+                    <h3>Database</h3>
+
+                    {% set database = [
+                        'MySQL','MongoDB',
+                        'PostgreSQL',
+                        'SQLite','Oracle',
+                        'Firebase'
+                    ] %}
+
+                    <div class="skills-grid">
+
+                        {% for skill in database %}
+
+                        <label class="skill-card">
+
+                            <input
+                                type="checkbox"
+                                name="skills"
+                                value="{{ skill }}"
+                                {% if skill in selected_skills %}
+                                checked
+                                {% endif %}
+                            >
+
+                            <span>{{ skill }}</span>
+
+                        </label>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+                <!-- AI -->
+
+                <div class="skill-category">
+
+                    <h3>AI & Data Science</h3>
+
+                    {% set ai = [
+                        'Machine Learning',
+                        'Deep Learning',
+                        'Data Science',
+                        'TensorFlow',
+                        'PyTorch',
+                        'Pandas',
+                        'NumPy',
+                        'ComputerVision',
+                        'NLP'
+                    ] %}
+
+                    <div class="skills-grid">
+
+                        {% for skill in ai %}
+
+                        <label class="skill-card">
+
+                            <input
+                                type="checkbox"
+                                name="skills"
+                                value="{{ skill }}"
+                                {% if skill in selected_skills %}
+                                checked
+                                {% endif %}
+                            >
+
+                            <span>{{ skill }}</span>
+
+                        </label>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+                <!-- CLOUD -->
+
+                <div class="skill-category">
+
+                    <h3>Cloud & DevOps</h3>
+
+                    {% set cloud = [
+                        'AWS',
+                        'Azure',
+                        'GoogleCloud',
+                        'Docker',
+                        'Kubernetes',
+                        'Git',
+                        'GitHub',
+                        'CICD',
+                        'Linux'
+                    ] %}
+
+                    <div class="skills-grid">
+
+                        {% for skill in cloud %}
+
+                        <label class="skill-card">
+
+                            <input
+                                type="checkbox"
+                                name="skills"
+                                value="{{ skill }}"
+                                {% if skill in selected_skills %}
+                                checked
+                                {% endif %}
+                            >
+
+                            <span>{{ skill }}</span>
+
+                        </label>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+                <!-- MOBILE -->
+
+                <div class="skill-category">
+
+                    <h3>Mobile Development</h3>
+
+                    {% set mobile = [
+                        'Flutter',
+                        'ReactNative'
+                    ] %}
+
+                    <div class="skills-grid">
+
+                        {% for skill in mobile %}
+
+                        <label class="skill-card">
+
+                            <input
+                                type="checkbox"
+                                name="skills"
+                                value="{{ skill }}"
+                                {% if skill in selected_skills %}
+                                checked
+                                {% endif %}
+                            >
+
+                            <span>{{ skill }}</span>
+
+                        </label>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+                <!-- BUTTON -->
+
+                <button type="submit"
+                        class="save-btn">
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Save Skills
+
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- SELECTED SKILLS -->
+
+        <div class="card">
+
+            <h2>Your Skills</h2>
+
+            {% if selected_skills and
+                  selected_skills|length > 0 %}
+
+                <div class="selected-skills">
+
+                    {% for skill in selected_skills %}
+
+                        <span class="selected-badge">
+
+                            {{ skill }}
+
+                        </span>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <p class="empty-text">
+                    No skills selected
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Reports | Career AI</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    display:flex;
+    min-height:100vh;
+    background:
+    linear-gradient(135deg,#0f172a,#1e293b,#2563eb);
+    overflow-x:hidden;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:260px;
+    background:rgba(15,23,42,0.92);
+    backdrop-filter:blur(20px);
+    color:white;
+    padding:30px 20px;
+    position:fixed;
+    height:100vh;
+    border-right:1px solid rgba(255,255,255,0.1);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:32px;
+    font-weight:700;
+    margin-bottom:40px;
+}
+
+.logo i{
+    color:#3b82f6;
+}
+
+.sidebar a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 16px;
+    color:#cbd5e1;
+    text-decoration:none;
+    border-radius:14px;
+    margin-bottom:14px;
+    transition:0.3s;
+}
+
+.sidebar a:hover,
+.sidebar a.active{
+    background:linear-gradient(135deg,#2563eb,#06b6d4);
+    color:white;
+    transform:translateX(6px);
+}
+
+/* MAIN */
+
+.main{
+    margin-left:260px;
+    width:100%;
+    padding:30px;
+}
+
+.topbar{
+    margin-bottom:30px;
+}
+
+.topbar h1{
+    color:white;
+    font-size:36px;
+}
+
+/* GRID */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:24px;
+}
+
+.card{
+    padding:28px;
+    border-radius:24px;
+    color:white;
+    position:relative;
+    overflow:hidden;
+    transition:0.4s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.blue{
+    background:linear-gradient(135deg,#3b82f6,#2563eb);
+}
+
+.green{
+    background:linear-gradient(135deg,#10b981,#059669);
+}
+
+.orange{
+    background:linear-gradient(135deg,#f59e0b,#d97706);
+}
+
+.purple{
+    background:linear-gradient(135deg,#8b5cf6,#7c3aed);
+}
+
+.card h4{
+    margin-bottom:10px;
+}
+
+.card h2{
+    font-size:40px;
+}
+
+/* BOX */
+
+.box{
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:24px;
+    padding:24px;
+    color:white;
+    margin-top:30px;
+}
+
+/* BUTTONS */
+
+.btn{
+    display:inline-block;
+    padding:14px 20px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#2563eb,#06b6d4);
+    color:white;
+    text-decoration:none;
+    margin-right:14px;
+    margin-top:15px;
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform:translateY(-4px);
+}
+
+/* CHART */
+
+.chart-box{
+    height:400px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+    .sidebar{
+        width:90px;
+    }
+
+    .sidebar a span,
+    .logo span{
+        display:none;
+    }
+
+    .main{
+        margin-left:90px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+    <div class="logo">
+        <i class="fa-solid fa-chart-column"></i>
+        <span>Career AI</span>
+    </div>
+
+    <a href="/admin/">
+        <i class="fa-solid fa-gauge"></i>
+        <span>Dashboard</span>
+    </a>
+
+    <a href="/admin/users">
+        <i class="fa-solid fa-users"></i>
+        <span>Manage Users</span>
+    </a>
+
+    <a href="/admin/reports" class="active">
+        <i class="fa-solid fa-chart-pie"></i>
+        <span>Reports</span>
+    </a>
+
+    <a href="/dashboard">
+        <i class="fa-solid fa-user"></i>
+        <span>User View</span>
+    </a>
+
+    <a href="/logout">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Logout</span>
+    </a>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+    <div class="topbar">
+
+        <h1>Analytics & Reports</h1>
+
+    </div>
+
+    <!-- CARDS -->
+
+    <div class="cards">
+
+        <div class="card blue">
+
+            <h4>Total Users</h4>
+
+            <h2>{{ total_users }}</h2>
+
+        </div>
+
+        <div class="card green">
+
+            <h4>Resume Uploads</h4>
+
+            <h2>{{ resume_uploaded }}</h2>
+
+        </div>
+
+        <div class="card orange">
+
+            <h4>AI Chats</h4>
+
+            <h2>{{ total_chatbot_usage }}</h2>
+
+        </div>
+
+        <div class="card purple">
+
+            <h4>Recommendations</h4>
+
+            <h2>{{ total_recommendations }}</h2>
+
+        </div>
+
+    </div>
+
+    <!-- CHART -->
+
+    <div class="box">
+
+        <h2>User Analytics</h2>
+
+        <br>
+
+        <div class="chart-box">
+
+            <canvas id="analyticsChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <!-- EXPORT -->
+
+    <div class="box">
+
+        <h2>Export Reports</h2>
+
+        <br>
+
+        <a href="/admin/export/users"
+           class="btn">
+
+            <i class="fa-solid fa-download"></i>
+
+            Export Users CSV
+
+        </a>
+
+        <a href="/admin/export/reports"
+           class="btn">
+
+            <i class="fa-solid fa-file-export"></i>
+
+            Export Analytics
+
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+new Chart(document.getElementById("analyticsChart"), {
+
+    type: "bar",
+
+    data: {
+
+        labels: [
+            "Users",
+            "Resume Uploads",
+            "AI Chats",
+            "Recommendations"
+        ],
+
+        datasets: [{
+
+            label:"Analytics",
+
+            data:[
+                {{ total_users }},
+                {{ resume_uploaded }},
+                {{ total_chatbot_usage }},
+                {{ total_recommendations }}
+            ],
+
+            backgroundColor:[
+                "#3b82f6",
+                "#10b981",
+                "#f59e0b",
+                "#8b5cf6"
+            ],
+
+            borderRadius:10
+
+        }]
+    },
+
+    options:{
+        responsive:true,
+        plugins:{
+            legend:{
+                labels:{
+                    color:"white"
+                }
+            }
+        },
+        scales:{
+            x:{
+                ticks:{color:"white"}
+            },
+            y:{
+                ticks:{color:"white"}
+            }
+        }
+    }
+});
+
+</script>
+
+</body>
+
+</html>

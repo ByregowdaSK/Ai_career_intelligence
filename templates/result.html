@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Results | Career AI</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+            background:linear-gradient(135deg,#020617,#071129,#0f172a);
+            display:flex;
+            min-height:100vh;
+            overflow-x:hidden;
+            color:white;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar{
+            width:260px;
+            height:100vh;
+            position:fixed;
+            top:0;
+            left:0;
+            background:linear-gradient(180deg,#020617,#0f172a,#111827);
+            padding:30px 18px;
+            box-shadow:10px 0 30px rgba(0,0,0,0.3);
+            border-right:1px solid #1e293b;
+        }
+
+        .logo{
+            color:white;
+            font-size:28px;
+            font-weight:700;
+            margin-bottom:50px;
+            display:flex;
+            align-items:center;
+            gap:12px;
+        }
+
+        .logo span{
+            color:#38bdf8;
+        }
+
+        .nav-links{
+            display:flex;
+            flex-direction:column;
+            gap:15px;
+        }
+
+        .nav-links a{
+            text-decoration:none;
+            color:#cbd5e1;
+            padding:15px 18px;
+            border-radius:16px;
+            display:flex;
+            align-items:center;
+            gap:14px;
+            transition:0.3s;
+            font-size:16px;
+            font-weight:500;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active{
+            background:linear-gradient(135deg,#2563eb,#06b6d4);
+            color:white;
+            transform:translateX(5px);
+            box-shadow:0 10px 25px rgba(37,99,235,0.3);
+        }
+
+        /* MAIN */
+
+        .main-content{
+            margin-left:260px;
+            width:calc(100% - 260px);
+            padding:35px;
+        }
+
+        /* HEADER */
+
+        .top-header{
+            margin-bottom:35px;
+        }
+
+        .top-header h1{
+            font-size:40px;
+            color:white;
+            margin-bottom:8px;
+        }
+
+        .top-header p{
+            color:#cbd5e1;
+            font-size:17px;
+        }
+
+        /* CARD */
+
+        .card{
+            background:rgba(15,23,42,0.9);
+            border:1px solid #1e293b;
+            border-radius:28px;
+            padding:30px;
+            margin-bottom:30px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.3);
+            transition:0.3s;
+            backdrop-filter:blur(10px);
+        }
+
+        .card:hover{
+            transform:translateY(-4px);
+            border-color:#3b82f6;
+        }
+
+        /* CARD TITLE */
+
+        .card h2{
+            font-size:30px;
+            margin-bottom:18px;
+            color:white;
+        }
+
+        /* SKILLS */
+
+        .skills-container{
+            display:flex;
+            flex-wrap:wrap;
+            gap:12px;
+            margin-top:15px;
+        }
+
+        .badge{
+            padding:12px 18px;
+            border-radius:30px;
+            font-size:14px;
+            font-weight:600;
+        }
+
+        .skill{
+            background:linear-gradient(135deg,#2563eb,#06b6d4);
+            color:white;
+            box-shadow:0 6px 18px rgba(37,99,235,0.25);
+        }
+
+        .match{
+            background:rgba(16,185,129,0.15);
+            color:#6ee7b7;
+            border:1px solid rgba(16,185,129,0.3);
+        }
+
+        .missing{
+            background:rgba(239,68,68,0.15);
+            color:#fca5a5;
+            border:1px solid rgba(239,68,68,0.3);
+        }
+
+        /* CAREER */
+
+        .career-title{
+            display:flex;
+            align-items:center;
+            gap:15px;
+            margin-bottom:15px;
+        }
+
+        .career-title i{
+            font-size:28px;
+            color:#3b82f6;
+        }
+
+        .career-title h2{
+            font-size:34px;
+            color:white;
+        }
+
+        /* SCORE */
+
+        .score-text{
+            margin-bottom:14px;
+            color:#e2e8f0;
+            font-size:18px;
+            font-weight:600;
+        }
+
+        /* PROGRESS */
+
+        .progress-box{
+            width:100%;
+            height:16px;
+            background:#1e293b;
+            border-radius:20px;
+            overflow:hidden;
+            margin-bottom:28px;
+        }
+
+        .progress-bar{
+            height:100%;
+            border-radius:20px;
+            background:linear-gradient(135deg,#10b981,#059669);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:white;
+            font-size:12px;
+            font-weight:700;
+            transition:1s;
+        }
+
+        /* SECTION */
+
+        .section-title{
+            margin-top:20px;
+            margin-bottom:14px;
+            font-size:22px;
+            font-weight:600;
+        }
+
+        .green{
+            color:#4ade80;
+        }
+
+        .red{
+            color:#f87171;
+        }
+
+        /* BUTTON */
+
+        .roadmap-btn{
+            margin-top:25px;
+            border:none;
+            padding:14px 22px;
+            border-radius:14px;
+            background:linear-gradient(135deg,#2563eb,#06b6d4);
+            color:white;
+            font-size:15px;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .roadmap-btn:hover{
+            transform:translateY(-3px);
+            box-shadow:0 10px 25px rgba(37,99,235,0.3);
+        }
+
+        /* ROADMAP */
+
+        .roadmap{
+            display:none;
+            margin-top:25px;
+            background:#111827;
+            border:1px solid #1e293b;
+            border-radius:18px;
+            padding:25px;
+        }
+
+        .roadmap h3{
+            margin-bottom:18px;
+            color:white;
+        }
+
+        .roadmap ul{
+            padding-left:20px;
+        }
+
+        .roadmap li{
+            margin-bottom:12px;
+            color:#cbd5e1;
+            line-height:1.6;
+        }
+
+        .copy-btn{
+            margin-top:18px;
+            border:none;
+            padding:12px 18px;
+            border-radius:12px;
+            background:#10b981;
+            color:white;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .copy-btn:hover{
+            transform:translateY(-2px);
+        }
+
+        /* EMPTY */
+
+        .empty{
+            color:#94a3b8;
+            font-size:16px;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:900px){
+
+            .sidebar{
+                width:85px;
+            }
+
+            .logo span,
+            .nav-links a span{
+                display:none;
+            }
+
+            .main-content{
+                margin-left:85px;
+                width:calc(100% - 85px);
+            }
+
+        }
+
+        @media(max-width:600px){
+
+            .main-content{
+                padding:20px;
+            }
+
+            .top-header h1{
+                font-size:28px;
+            }
+
+            .career-title h2{
+                font-size:24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <div class="logo">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Career AI</span>
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/dashboard">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="/profile">
+                <i class="fa-solid fa-user"></i>
+                <span>Profile</span>
+            </a>
+
+            <a href="/recommend">
+                <i class="fa-solid fa-lightbulb"></i>
+                <span>Recommendations</span>
+            </a>
+
+            <a href="/results" class="active">
+                <i class="fa-solid fa-chart-column"></i>
+                <span>Results</span>
+            </a>
+
+            <a href="/resume">
+                <i class="fa-solid fa-file"></i>
+                <span>Resume</span>
+            </a>
+
+            <a href="/chatbot">
+                <i class="fa-solid fa-robot"></i>
+                <span>AI Chatbot</span>
+            </a>
+
+            <a href="/logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- MAIN -->
+
+    <div class="main-content">
+
+        <!-- HEADER -->
+
+        <div class="top-header">
+
+            <h1>Career Analysis Results</h1>
+
+            <p>
+                Detailed AI-powered analysis of your career opportunities
+            </p>
+
+        </div>
+
+        <!-- USER SKILLS -->
+
+        <div class="card">
+
+            <h2>Your Skills</h2>
+
+            {% if skills %}
+
+                <div class="skills-container">
+
+                    {% for s in skills.split(',') %}
+
+                        <div class="badge skill">
+                            {{ s.strip() }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <p class="empty">
+                    No skills selected
+                </p>
+
+            {% endif %}
+
+        </div>
+
+        <!-- RESULTS -->
+
+        {% for r in results %}
+
+            <div class="card">
+
+                <!-- TITLE -->
+
+                <div class="career-title">
+
+                    <i class="fa-solid fa-briefcase"></i>
+
+                    <h2>
+                        {{ r.career }}
+                    </h2>
+
+                </div>
+
+                <!-- SCORE -->
+
+                <div class="score-text">
+                    Match Score: {{ r.score }}%
+                </div>
+
+                <div class="progress-box">
+
+                    <div class="progress-bar"
+                         style="width: {{ r.score }}%;">
+
+                        {{ r.score }}%
+
+                    </div>
+
+                </div>
+
+                <!-- MATCHING -->
+
+                <div class="section-title green">
+                    ✔ Matching Skills
+                </div>
+
+                {% if r.matched_skills %}
+
+                    <div class="skills-container">
+
+                        {% for s in r.matched_skills %}
+
+                            <div class="badge match">
+                                {{ s }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <p class="empty">
+                        No matching skills
+                    </p>
+
+                {% endif %}
+
+                <!-- MISSING -->
+
+                <div class="section-title red">
+                    ✖ Missing Skills
+                </div>
+
+                {% if r.missing_skills %}
+
+                    <div class="skills-container">
+
+                        {% for m in r.missing_skills %}
+
+                            <div class="badge missing">
+                                {{ m }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <p class="empty">
+                        No missing skills 🎉
+                    </p>
+
+                {% endif %}
+
+                <!-- BUTTON -->
+
+                <button class="roadmap-btn"
+                        onclick="toggleRoadmap({{ loop.index }})">
+
+                    View Roadmap
+
+                </button>
+
+                <!-- ROADMAP -->
+
+                <div class="roadmap"
+                     id="roadmap{{ loop.index }}">
+
+                    <h3>Learning Roadmap</h3>
+
+                    <ul>
+
+                        {% for step in r.roadmap %}
+
+                            <li>
+                                {{ step }}
+                            </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                    <button class="copy-btn"
+                            onclick="copyRoadmap({{ loop.index }})">
+
+                        Copy Roadmap
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- SCRIPT -->
+
+    <script>
+
+        function toggleRoadmap(id){
+
+            const roadmap =
+                document.getElementById(
+                    "roadmap" + id
+                );
+
+            if(roadmap.style.display === "block"){
+
+                roadmap.style.display = "none";
+
+            }else{
+
+                roadmap.style.display = "block";
+
+            }
+
+        }
+
+        function copyRoadmap(id){
+
+            const text =
+                document.getElementById(
+                    "roadmap" + id
+                ).innerText;
+
+            navigator.clipboard.writeText(text);
+
+            alert("Roadmap copied successfully");
+
+        }
+
+    </script>
+
+</body>
+
+</html>

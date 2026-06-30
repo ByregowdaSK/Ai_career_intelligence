@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% block title %}Career Intelligence - Home{% endblock %}
+{% block extra_css %}
+<style>
+  .hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    animation: float 20s ease-in-out infinite;
+  }
+  @keyframes float { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-20px) rotate(180deg); } }
+  .hero h1 { font-size: clamp(3rem, 8vw, 6rem); font-weight: 800; letter-spacing: -0.05em; }
+  .features-grid { gap: 2rem; }
+  .feature-card {
+    transition: all 0.4s ease;
+    cursor: pointer;
+  }
+  .feature-card:hover {
+    transform: translateY(-12px) scale(1.02);
+  }
+  .floating-cards {
+    position: absolute;
+    top: 20%; right: 10%;
+    animation: float-card 6s ease-in-out infinite;
+  }
+  @keyframes float-card { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hero position-relative overflow-hidden">
+  <div class="container position-relative z-2 text-white px-4">
+    <div class="row align-items-center min-vh-100">
+      <div class="col-lg-6" data-aos="fade-right">
+        <h1 class="display-1 fw-bold mb-4 lh-1 text-shadow-lg">Unlock Your</h1>
+        <h1 class="display-1 fw-bold mb-5 lh-1 text-shadow-lg">Career Potential</h1>
+        <p class="lead fs-3 mb-5 opacity-90">AI-powered skill analysis, personalized career paths, and actionable insights to accelerate your professional growth.</p>
+        <div class="d-flex gap-3 flex-wrap">
+          <a href="/register" class="btn btn-light btn-lg px-5 py-3 fw-bold shadow-lg">
+            <i class="fas fa-rocket me-2"></i>Start Free
+          </a>
+          <a href="#features" class="btn btn-outline-light btn-lg px-5 py-3 fw-bold">
+            <i class="fas fa-play me-2"></i>Watch Demo
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="floating-cards glass-card p-5">
+          <h4 class="mb-3"><i class="fas fa-chart-line text-primary me-2"></i>95% Match Rate</h4>
+          <p class="mb-0 text-white-50">AI analyzes your skills for perfect career fit</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="features" class="py-5">
+  <div class="container px-4">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <h2 class="display-4 fw-bold mb-4">Everything You Need</h2>
+      <p class="lead text-muted w-75 mx-auto">Advanced AI analyzes your skills, resume, and experience to deliver personalized career guidance.</p>
+    </div>
+    
+    <div class="row features-grid g-4 justify-content-center">
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="feature-card glass-card h-100 p-5 text-center">
+          <div class="bg-primary bg-opacity-10 rounded-circle mx-auto mb-4 p-4" style="width: 100px; height: 100px;">
+            <i class="fas fa-brain fa-2x text-primary"></i>
+          </div>
+          <h4 class="fw-bold mb-3">AI Skill Analysis</h4>
+          <p class="text-muted">Automatically detect and evaluate your technical & soft skills.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="feature-card glass-card h-100 p-5 text-center">
+          <div class="bg-success bg-opacity-10 rounded-circle mx-auto mb-4 p-4" style="width: 100px; height: 100px;">
+            <i class="fas fa-chart-pie fa-2x text-success"></i>
+          </div>
+          <h4 class="fw-bold mb-3">Career Matching</h4>
+          <p class="text-muted">Find the best career paths based on market demand and your strengths.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="feature-card glass-card h-100 p-5 text-center">
+          <div class="bg-warning bg-opacity-10 rounded-circle mx-auto mb-4 p-4" style="width: 100px; height: 100px;">
+            <i class="fas fa-road fa-2x text-warning"></i>
+          </div>
+          <h4 class="fw-bold mb-3">Learning Roadmap</h4>
+          <p class="text-muted">Personalized 6-month plan to bridge skill gaps.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+        <div class="feature-card glass-card h-100 p-5 text-center">
+          <div class="bg-info bg-opacity-10 rounded-circle mx-auto mb-4 p-4" style="width: 100px; height: 100px;">
+            <i class="fas fa-file-alt fa-2x text-info"></i>
+          </div>
+          <h4 class="fw-bold mb-3">Resume Optimization</h4>
+          <p class="text-muted">ATS-friendly resume scoring and improvement suggestions.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 bg-primary bg-opacity-10">
+  <div class="container px-4 text-center">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6" data-aos="fade-right">
+        <h2 class="display-5 fw-bold mb-4 text-dark">Trusted by 10,000+ Professionals</h2>
+        <p class="lead mb-4 text-muted">Join thousands who have transformed their careers with our AI insights.</p>
+        <div class="row text-start g-3">
+          <div class="col-12">
+            <div class="d-flex align-items-center glass-card p-4">
+              <div class="bg-success bg-opacity-20 rounded-circle me-3 p-3">
+                <i class="fas fa-star fa-2x text-success"></i>
+              </div>
+              <div>
+                <h5 class="fw-bold mb-1">Perfect Match!</h5>
+                <p class="mb-0 text-muted">"Found my dream Data Scientist role in 2 weeks"</p>
+                <small class="text-primary fw-semibold">Sarah K., Data Analyst</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6" data-aos="fade-left">
+        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhmYWZjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2YwZjBmMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNoYXJ0IEJsb2NrPC90ZXh0Pjwvc3ZnPg==" alt="Growth Chart" class="img-fluid rounded-5 shadow-xl glass-card p-5">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5">
+  <div class="container px-4 text-center" data-aos="fade-up">
+    <h2 class="display-4 fw-bold mb-5">Ready to Transform Your Career?</h2>
+    <a href="/register" class="btn btn-primary btn-lg px-6 py-4 fs-4 fw-bold shadow-lg">
+      <i class="fas fa-arrow-right me-3"></i>Start Your Journey Today
+    </a>
+  </div>
+</section>
+
+<footer class="bg-dark text-white py-5 mt-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <h5 class="fw-bold mb-3"><i class="fas fa-rocket me-2 text-primary"></i>Career AI</h5>
+        <p class="text-white-50">Empowering professionals worldwide with cutting-edge AI career intelligence.</p>
+      </div>
+      <div class="col-md-2 col-6 mb-4">
+        <h6 class="fw-bold mb-3">Product</h6>
+        <ul class="list-unstyled">
+          <li><a href="/dashboard" class="text-white-50 hover-text-white">Dashboard</a></li>
+          <li><a href="/recommend" class="text-white-50 hover-text-white">Recommendations</a></li>
+          <li><a href="/resume" class="text-white-50 hover-text-white">Resume</a></li>
+        </ul>
+      </div>
+      <div class="col-md-2 col-6 mb-4">
+        <h6 class="fw-bold mb-3">Company</h6>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-white-50 hover-text-white">About</a></li>
+          <li><a href="#" class="text-white-50 hover-text-white">Contact</a></li>
+          <li><a href="#" class="text-white-50 hover-text-white">Careers</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 mb-4">
+        <h6 class="fw-bold mb-3">Stay Updated</h6>
+        <div class="input-group">
+          <input type="email" class="form-control border-0 rounded-pill px-4" placeholder="Your email">
+          <button class="btn btn-primary rounded-pill px-4"><i class="fas fa-paper-plane"></i></button>
+        </div>
+      </div>
+    </div>
+    <hr class="my-4 opacity-25">
+    <div class="text-center">
+      <p class="mb-0 text-white-50">&copy; 2024 Career AI. All rights reserved. 🚀</p>
+    </div>
+  </div>
+</footer>
+{% endblock %}
