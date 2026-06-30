@@ -1,70 +1,33 @@
 from db import get_db_connection
-
-
-# ==============================
-# AUTH
-# ==============================
-
 def get_user_by_email(email):
-
     conn = get_db_connection()
-
     cursor = conn.cursor(dictionary=True)
-
     cursor.execute(
         "SELECT * FROM tbl_user WHERE email=%s",
         (email,)
     )
-
     user = cursor.fetchone()
-
     conn.close()
-
     return user
-
-
-# ==============================
-# USER SKILLS
-# ==============================
-
 def get_user_skills(user_id):
-
     conn = get_db_connection()
-
     cursor = conn.cursor(dictionary=True)
-
     cursor.execute(
         "SELECT * FROM tbl_user WHERE id=%s",
         (user_id,)
     )
-
     result = cursor.fetchone()
-
     conn.close()
-
     return result
-
-
 def update_user_skills(user_id, skills):
-
     conn = get_db_connection()
-
     cursor = conn.cursor()
-
     cursor.execute(
         "UPDATE tbl_user SET skills=%s WHERE id=%s",
         (skills, user_id)
     )
-
     conn.commit()
-
     conn.close()
-
-
-# ==============================
-# RESUME STORAGE
-# ==============================
-
 def save_resume_data(
     user_id,
     filename,
@@ -73,15 +36,10 @@ def save_resume_data(
     careers,
     roadmap
 ):
-
     conn = get_db_connection()
-
     cursor = conn.cursor()
-
     cursor.execute("""
-
         UPDATE tbl_user
-
         SET
             resume_uploaded = 1,
             resume_filename = %s,
@@ -89,32 +47,21 @@ def save_resume_data(
             detected_skills = %s,
             recommended_careers = %s,
             career_roadmap = %s
-
         WHERE id = %s
-
     """, (
-
         filename,
         score,
         skills,
         careers,
         roadmap,
         user_id
-
     ))
-
     conn.commit()
-
     conn.close()
-
     conn = get_db_connection()
-
     cursor = conn.cursor()
-
     cursor.execute("""
-
         UPDATE tbl_user
-
         SET
             resume_uploaded = 1,
             resume_filename = %s,
@@ -122,21 +69,15 @@ def save_resume_data(
             detected_skills = %s
 
         WHERE id = %s
-
     """, (
 
         filename,
         score,
         skills,
         user_id
-
     ))
-
     conn.commit()
-
     conn.close()
-
-
 def get_resume_data(user_id):
 
     conn = get_db_connection()
@@ -158,18 +99,9 @@ def get_resume_data(user_id):
         WHERE id = %s
 
     """, (user_id,))
-
     result = cursor.fetchone()
-
     conn.close()
-
     return result
-
-
-# ==============================
-# ADMIN FUNCTIONS
-# ==============================
-
 def get_all_users():
 
     conn = get_db_connection()
@@ -202,12 +134,6 @@ def delete_user_by_id(user_id):
     conn.commit()
 
     conn.close()
-
-
-# ==============================
-# ADMIN STATISTICS
-# ==============================
-
 def get_total_users():
 
     conn = get_db_connection()
@@ -316,11 +242,6 @@ def get_total_recommendations():
     conn.close()
 
     return result or 0
-
-# ==============================
-# UPDATE RECOMMENDATION COUNT
-# ==============================
-
 def update_recommendation_count(user_id, count):
 
     conn = get_db_connection()
@@ -336,11 +257,6 @@ def update_recommendation_count(user_id, count):
     conn.commit()
 
     conn.close()
-
-# ==============================
-# GET USER BY ID
-# ==============================
-
 def get_user_by_id(user_id):
 
     conn = get_db_connection()
