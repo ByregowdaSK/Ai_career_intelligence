@@ -4,23 +4,8 @@ from utils.resume_parser import (
     extract_text,
     analyze_resume
 )
-
-# =========================================================
-# CHATBOT
-# =========================================================
-
 from utils.chatbot import ask_ai
-
-# =========================================================
-# DATABASE
-# =========================================================
-
 from db import get_db_connection
-
-# =========================================================
-# MODELS
-# =========================================================
-
 from models.user_model import (
 
     get_user_skills,
@@ -33,10 +18,6 @@ from models.user_model import (
 
 )
 
-# =========================================================
-# AI / LOGIC
-# =========================================================
-
 from utils.skill_gap import (
 
     analyze_careers,
@@ -45,9 +26,6 @@ from utils.skill_gap import (
 
 )
 
-# =========================================================
-# BLUEPRINT
-# =========================================================
 
 main = Blueprint(
 
@@ -57,9 +35,6 @@ main = Blueprint(
 
 )
 
-# =========================================================
-# DASHBOARD
-# =========================================================
 
 @main.route('/dashboard')
 def dashboard():
@@ -120,11 +95,6 @@ def dashboard():
         resume_score=resume_score
 
     )
-
-# =========================================================
-# PROFILE
-# =========================================================
-
 @main.route('/profile', methods=['GET', 'POST'])
 def profile():
 
@@ -222,10 +192,6 @@ def recommend():
         results=results
     )
 
-# =========================================================
-# RESULTS
-# =========================================================
-
 @main.route('/results')
 def results():
 
@@ -245,10 +211,6 @@ def results():
     results = analyze_careers(
         skills
     )
-
-    # =====================================================
-    # SAVE RECOMMENDATIONS
-    # =====================================================
 
     recommended_careers = ",".join([
 
@@ -295,10 +257,6 @@ def results():
 
     )
 
-# =========================================================
-# RESUME ANALYZER
-# =========================================================
-
 @main.route('/resume', methods=['GET', 'POST'])
 def resume():
 
@@ -323,10 +281,6 @@ def resume():
 
             filename = file.filename
 
-            # =================================================
-            # REAL RESUME ANALYSIS
-            # =================================================
-
             file.seek(0)
 
             resume_text = extract_text(file)
@@ -341,10 +295,7 @@ def resume():
             print(result)
 
             result = analyze_resume(resume_text)
-            # =================================================
-            # CAREER ANALYSIS
-            # =================================================
-
+       
             skills_string = ",".join(
             result.get('detected_skills', [])
             )
@@ -352,10 +303,6 @@ def resume():
             results = analyze_careers(
                 skills_string
             )
-
-            # =================================================
-            # SAVE RECOMMENDATIONS
-            # =================================================
 
             recommended_careers = ",".join([
 
@@ -392,10 +339,6 @@ def resume():
 
             conn.close()
 
-            # =================================================
-            # EXTRACT CAREERS
-            # =================================================
-
             career_names = []
 
             roadmaps = []
@@ -419,10 +362,6 @@ def resume():
             roadmap_string = " | ".join(
                 roadmaps
             )
-
-            # =================================================
-            # SAVE TO DATABASE
-            # =================================================
 
             save_resume_data(
 
@@ -456,10 +395,6 @@ def resume():
 
     )
 
-# =========================================================
-# CHATBOT
-# =========================================================
-
 @main.route('/chatbot', methods=['GET', 'POST'])
 def chatbot():
 
@@ -479,11 +414,6 @@ def chatbot():
         answer = ask_ai(
             question
         )
-
-        # =================================================
-        # UPDATE CHATBOT USAGE
-        # =================================================
-
         conn = get_db_connection()
 
         cursor = conn.cursor()
