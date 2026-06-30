@@ -1,7 +1,3 @@
-# ==========================================
-# 🚀 CAREER + SKILL GAP ENGINE
-# ==========================================
-
 CAREER_PATHS = {
 
     "Full Stack Developer": {
@@ -106,11 +102,6 @@ CAREER_PATHS = {
 
 }
 
-
-# ==========================================
-# ✅ NORMALIZE SKILL
-# ==========================================
-
 def normalize_skill(skill):
 
     skill = skill.strip().lower()
@@ -143,11 +134,6 @@ def normalize_skill(skill):
     }
 
     return replacements.get(skill, skill)
-
-
-# ==========================================
-# 🎯 ANALYZE CAREERS
-# ==========================================
 
 def analyze_careers(skills):
 
@@ -211,14 +197,7 @@ def analyze_careers(skills):
 
     return results
 
-
-# ==========================================
-# 🧠 VALIDATE SKILLS
-# ==========================================
-
 VALID_SKILLS = [
-
-    # LANGUAGES
 
     "python",
     "java",
@@ -233,9 +212,6 @@ VALID_SKILLS = [
     "swift",
     "kotlin",
     "r",
-
-    # WEB
-
     "html",
     "css",
     "bootstrap",
@@ -248,18 +224,12 @@ VALID_SKILLS = [
     "expressjs",
     "spring",
     "sql",
-
-    # DATABASE
-
     "mysql",
     "mongodb",
     "postgresql",
     "sqlite",
     "oracle",
     "firebase",
-
-    # AI
-
     "machinelearning",
     "deeplearning",
     "datascience",
@@ -269,9 +239,6 @@ VALID_SKILLS = [
     "numpy",
     "computervision",
     "nlp",
-
-    # CLOUD
-
     "aws",
     "azure",
     "googlecloud",
@@ -281,9 +248,6 @@ VALID_SKILLS = [
     "github",
     "cicd",
     "linux",
-
-    # MOBILE
-
     "flutter",
     "reactnative"
 
@@ -312,11 +276,6 @@ def validate_user_skills(skills):
 
     return invalid
 
-
-# ==========================================
-# 📚 ROADMAP
-# ==========================================
-
 def generate_roadmap(missing_skills):
 
     roadmap = []
@@ -332,11 +291,6 @@ def generate_roadmap(missing_skills):
         week += 2
 
     return roadmap
-
-
-# ==========================================
-# 📊 SCORE CALCULATOR
-# ==========================================
 
 def calculate_score(user_skills, required_skills):
 
