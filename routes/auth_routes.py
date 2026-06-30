@@ -1,15 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, session
-
 from models.user_model import get_user_by_email
 from db import get_db_connection
-
 from werkzeug.security import generate_password_hash, check_password_hash
-
 import random
 import re
-
 from datetime import datetime
-
 from flask_mail import Message
 from extensions import mail
 
@@ -59,8 +54,6 @@ def login():
                 cursor.close()
                 conn.close()
 
-                # ADMIN REDIRECT
-
                 if user['role'] == 'admin':
                     return redirect('/admin')
 
@@ -78,8 +71,6 @@ def login():
                 session['is_admin'] = (
                     user['role'] == 'admin'
                 )
-
-                # UPDATE LAST LOGIN
 
                 conn = get_db_connection()
                 cursor = conn.cursor()
