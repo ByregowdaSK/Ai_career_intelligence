@@ -2,11 +2,6 @@ import re
 
 print("✅ resume_parser LOADED")
 
-
-# ==========================================
-# 📄 TEXT EXTRACTION
-# ==========================================
-
 def extract_text(file):
     
     file.seek(0)
@@ -15,7 +10,6 @@ def extract_text(file):
 
     data = file.read()
 
-    # ---------- PDF ----------
     if filename.endswith('.pdf'):
 
         try:
@@ -33,8 +27,6 @@ def extract_text(file):
 
         except Exception:
             return ""
-
-    # ---------- DOCX ----------
     elif filename.endswith('.docx'):
 
         try:
@@ -49,8 +41,6 @@ def extract_text(file):
 
         except Exception:
             return ""
-
-    # ---------- TXT ----------
     elif filename.endswith('.txt'):
 
         try:
@@ -64,34 +54,19 @@ def extract_text(file):
 
     return ""
 
-
-# ==========================================
-# 🧠 SKILLS DATABASE
-# ==========================================
-
 SKILLS_DB = [
-
-    # Programming
     "python", "java", "c", "c++", "c#",
     "javascript", "typescript", "php",
     "go", "rust", "swift", "kotlin",
-
-    # Web
     "html", "css", "bootstrap",
     "react", "angular", "vue.js",
     "node.js", "express.js",
-
-    # Backend
     "django", "flask",
     "spring", "spring boot",
     "laravel", ".net",
-
-    # Database
     "sql", "mysql", "mongodb",
     "postgresql", "sqlite",
     "firebase", "oracle",
-
-    # AI / Data Science
     "machine learning",
     "deep learning",
     "data science",
@@ -101,26 +76,18 @@ SKILLS_DB = [
     "numpy",
     "computer vision",
     "nlp",
-
-    # Cloud / DevOps
     "aws", "azure",
     "google cloud",
     "docker",
     "kubernetes",
     "git", "github",
     "ci/cd",
-
-    # Tools
     "linux",
     "excel",
     "power bi",
     "tableau"
 ]
 
-
-# ==========================================
-# 🔍 SKILL EXTRACTION
-# ==========================================
 
 def extract_skills(text):
 
@@ -135,11 +102,6 @@ def extract_skills(text):
 
     return sorted(list(found))
 
-
-# ==========================================
-# 📑 SECTION CHECKER
-# ==========================================
-
 def has_section(text, keywords):
 
     text = text.lower()
@@ -150,15 +112,9 @@ def has_section(text, keywords):
     )
 
 
-# ==========================================
-# 📊 RESUME ANALYSIS
-# ==========================================
-
 def analyze_resume(text):
 
     text_lower = text.lower()
-
-    # ---------- Sections ----------
     sections = {
 
         "education": has_section(
@@ -186,33 +142,18 @@ def analyze_resume(text):
             ["certification", "certifications"]
         )
     }
-
-    # ---------- Skills ----------
     detected_skills = extract_skills(text_lower)
 
-    # ---------- Score ----------
     score = 0
-
-    # Section scores
     score += 15 if sections["education"] else 0
     score += 20 if sections["projects"] else 0
     score += 20 if sections["experience"] else 0
     score += 15 if sections["skills_section"] else 0
     score += 10 if sections["certifications"] else 0
-
-    # Skills score
     score += min(len(detected_skills) * 2, 20)
-
-    # Extra resume quality checks
     if len(text.split()) > 300:
         score += 5
-
-    # Limit to 100
     score = min(score, 100)
-
-    # ==========================================
-    # 💡 FEEDBACK
-    # ==========================================
 
     feedback = []
 
@@ -251,10 +192,6 @@ def analyze_resume(text):
             "Resume content is too short"
         )
 
-    # ==========================================
-    # 🏆 RESUME LEVEL
-    # ==========================================
-
     if score >= 85:
         level = "Excellent"
 
@@ -266,10 +203,6 @@ def analyze_resume(text):
 
     else:
         level = "Needs Improvement"
-
-    # ==========================================
-    # 📦 FINAL RESULT
-    # ==========================================
 
     return {
 
