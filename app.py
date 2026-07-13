@@ -6,7 +6,7 @@ from routes.chatbot_routes import chatbot
 
 from routes.auth_routes import auth
 from routes.main_routes import main
-from routes.admin import admin   # ✅ IMPORTANT
+from routes.admin import admin   
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -17,19 +17,19 @@ app = Flask(
     static_folder=os.path.join(BASE_DIR, 'static')
 )
 
-app.secret_key = "1234567890"
+app.secret_key = "..."
 
 # ✅ REGISTER BLUEPRINTS
 app.register_blueprint(auth)
 app.register_blueprint(main)
 app.register_blueprint(admin)
 app.register_blueprint(chatbot)
-app.config['MAIL_SERVER'] = 'sp.gmail.com'
-app.config['MAIL_PORT'] = 123
+app.config['MAIL_SERVER'] = '...'
+app.config['MAIL_PORT'] = ...
 app.config['MAIL_USE_TLS'] = True
 
-app.config['MAIL_USERNAME'] = 'asdfghjkl.project@gmail.com'
-app.config['MAIL_PASSWORD'] = 'asdfghjkl'
+app.config['MAIL_USERNAME'] = '...'
+app.config['MAIL_PASSWORD'] = '...'
 
 mail.init_app(app)
 
