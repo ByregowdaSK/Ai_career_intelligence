@@ -1,7 +1,7 @@
 from groq import Groq
 
 client = Groq(
-    api_key="qwertyuioplkjhgfdsa"
+    api_key="..."
 )
 
 def ask_ai(question):
